@@ -356,20 +356,3 @@ namespace arithmetic {
 
     NODE_MODULE(NODE_GYP_MODULE_NAME, Initialize);
 }
-
-// int main(){
-//     char keyin[600],left[600],right[600],operator_;
-//     int a=0;
-//     String r;
-//     while(fgets(keyin,600,stdin)!=NULL){
-//         split(keyin,left,&operator_,right);
-        // a = Div_expansion_match(left,right);
-        // if(operator_=='+')r = Add(left,right);
-        // else if(operator_=='-')r = a==0?Sub(left,right):Sub(right,left);
-        // else if(operator_=='*')r = Mul(left,right);
-        // else if(operator_=='/')r = Div(left,right);
-        // if(a==1&&operator_=='-')printf("-%s\n",r.res);
-        // else printf("%s\n",r.res);
-//     }
-//     return 0;
-// }
