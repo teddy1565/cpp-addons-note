@@ -34,14 +34,17 @@ namespace globalCache {
 
         Local<Object> bufferObj = args[0].As<Object>();
         void *ptr = malloc(sizeof(bufferObj));
-        args.GetReturnValue().Set(External::New(isolate, ptr));
+        auto s = v8::SharedArrayBuffer::New(isolate, ptr, sizeof(bufferObj));
+        cout << ptr << endl;
+        args.GetReturnValue().Set(s);
     }
 
     void ReadSHM(const FunctionCallbackInfo<Value>& args) {
         Isolate* isolate = args.GetIsolate();
         String::Utf8Value v8_inputString(isolate, args[0]->TypeOf(isolate));
         printf("%s\n", ToString(v8_inputString));
-        auto ptr = args[0];
+        auto ptr = args[0].As<v8::SharedArrayBuffer>()->GetContents().Data();
+        cout << ptr <<endl;
         // int32_t value = args[0] -> Uint32Value(isolate->GetCurrentContext()).ToChecked();
         // cout << value << endl;
         // int *ptr = (int*) value;
