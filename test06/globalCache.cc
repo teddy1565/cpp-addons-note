@@ -36,13 +36,16 @@ namespace globalCache {
     void WriteSHM(const FunctionCallbackInfo<Value>& args) {
         Isolate* isolate = args.GetIsolate();
         String::Utf8Value v8_inputString(isolate, args[0]->TypeOf(isolate));
-        printf("%s\n", ToString(v8_inputString));
+        // printf("%s\n", ToString(v8_inputString));
 
-        Local<Object> bufferObj = args[0].As<Object>();
-        void *ptr = malloc(sizeof(bufferObj));
-        auto sharedArrayBuffer = v8::SharedArrayBuffer::New(isolate, ptr, sizeof(bufferObj));
-        cout << ptr << endl;
-        cout << sizeof(bufferObj) << endl;
+        Local<Function> bufferObj = args[0].As<Function>();
+        void *ptr = malloc(sizeof(bufferObj)*1000);
+        if (ptr == NULL) {
+            cout << "fail" << endl;
+        }
+        auto sharedArrayBuffer = v8::SharedArrayBuffer::New(isolate, ptr, sizeof(bufferObj)*10000);
+        // cout << ptr << endl;
+        // cout << sizeof(bufferObj) << endl;
         args.GetReturnValue().Set(sharedArrayBuffer);
     }
 
@@ -56,6 +59,7 @@ namespace globalCache {
         auto length = arrayBuffer->ByteLength();
         void *func_address = arrayBuffer->Data();
         cout << func_address << endl;
+        free(func_address);
         // func();
         // func_ptr = func_address;
 
