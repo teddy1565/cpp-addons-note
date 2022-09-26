@@ -1,18 +1,14 @@
 const globalCache = require("./build/Release/globalCache");
+const http = require("http");
 
-function a(ss) {
-    return ss;
+
+function helloworld(num, str) {
+    console.log(num);
+    console.log(str);
 }
+let heap = globalCache.set(helloworld);
+console.log(heap);
+globalCache.get(heap);
 
-let result = globalCache.set(a);
 
-console.log(result);
-
-globalCache.get(result);
-
-// for (let i = 0; i < 100000; i++) {
-//     console.log(globalCache.set(a));
-// }
-// console.log(globalCache.get());
-
-setTimeout(() => {console.log(1)}, 10000);
+// console.log(heap);

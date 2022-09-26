@@ -38,15 +38,22 @@ namespace globalCache {
         String::Utf8Value v8_inputString(isolate, args[0]->TypeOf(isolate));
         // printf("%s\n", ToString(v8_inputString));
 
-        Local<Function> bufferObj = args[0].As<Function>();
-        void *ptr = malloc(sizeof(bufferObj)*1000);
-        if (ptr == NULL) {
-            cout << "fail" << endl;
-        }
-        auto sharedArrayBuffer = v8::SharedArrayBuffer::New(isolate, ptr, sizeof(bufferObj)*10000);
+        Local<v8::SharedArrayBuffer> bufferObj = args[0].As<v8::SharedArrayBuffer>();
+        auto length = bufferObj->ByteLength();
+        cout << &bufferObj << endl;
+        cout << length << endl;
+        // void *ptrr = bufferObj->GetBackingStore()->Data();
+        // void *ptr = malloc(sizeof(bufferObj)*1000);
+        // if (ptr == NULL) {
+        //     cout << "fail" << endl;
+        // }
+        // auto sharedArrayBuffer = v8::SharedArrayBuffer::New(isolate, ptr, bufferObj->ByteLength());
         // cout << ptr << endl;
+        // cout << ptrr << endl;
+        // cout << bufferObj->ByteLength() << endl;
         // cout << sizeof(bufferObj) << endl;
-        args.GetReturnValue().Set(sharedArrayBuffer);
+        // cout << sizeof(bufferObj->ByteLength()) << endl;
+        args.GetReturnValue().Set(bufferObj);
     }
 
     void ReadSHM(const FunctionCallbackInfo<Value>& args) {
@@ -54,12 +61,12 @@ namespace globalCache {
         Isolate* isolate = args.GetIsolate();
         String::Utf8Value v8_inputString(isolate, args[0]->TypeOf(isolate));
         printf("%s\n", ToString(v8_inputString));
-        auto arrayBuffer = args[0].As<v8::SharedArrayBuffer>()->GetBackingStore();
+        // auto arrayBuffer = args[0].As<v8::SharedArrayBuffer>()->GetBackingStore();
 
-        auto length = arrayBuffer->ByteLength();
-        void *func_address = arrayBuffer->Data();
-        cout << func_address << endl;
-        free(func_address);
+        // auto length = arrayBuffer->ByteLength();
+        // void *func_address = arrayBuffer->Data();
+        // cout << func_address << endl;
+        // free(func_address);
         // func();
         // func_ptr = func_address;
 
